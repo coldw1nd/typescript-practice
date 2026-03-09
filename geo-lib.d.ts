@@ -1,0 +1,1 @@
+declare function calculateDistance(point1: [number, number], point2: [number, number]): number;
