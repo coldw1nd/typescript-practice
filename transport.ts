@@ -37,6 +37,7 @@ export abstract class BaseTransport implements IVehicle{
         this.id = id;
         this.status = status;
         this.maxSpeed = maxSpeed;
+        BaseTransport.totalVehicles++;
     }
 }
 
@@ -80,7 +81,7 @@ export class Bus extends BaseTransport{
 @RegisterTransport
 export class Tram extends BaseTransport{
     getTransportInfo(): string {
-        return `Автобус: [ID: ${this.id}], Макс. скорость: ${this.maxSpeed}`;
+        return `Травмай: [ID: ${this.id}], Макс. скорость: ${this.maxSpeed}`;
     }
 }
 
