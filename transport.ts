@@ -59,8 +59,15 @@ export function LogRoute(target: any, propertyKey: string, descriptor: PropertyD
 
 @RegisterTransport
 export class Bus extends BaseTransport{
+    private passengers: string[] = [];
+
     getTransportInfo(): string {
         return `Автобус: [ID: ${this.id}], Макс. скорость: ${this.maxSpeed}`;
+    }
+
+    addPassengers(...passengers: string[]): void{
+        this.passengers.push(...passengers);
+        console.log(`В автобус сели: ${passengers.join(", ")}. Всего ${passengers.length} человек`)
     }
 
     @LogRoute
@@ -69,3 +76,24 @@ export class Bus extends BaseTransport{
         console.log(`Автобус едет в точку: Широта ${destination[0]}, Долгота ${destination[1]}`);
     }
 }
+
+@RegisterTransport
+export class Tram extends BaseTransport{
+    getTransportInfo(): string {
+        return `Автобус: [ID: ${this.id}], Макс. скорость: ${this.maxSpeed}`;
+    }
+}
+
+type Constructor<T = {}> = new(...args: any[]) => T;
+
+export function Payable<TBase extends Constructor>(Base: TBase){
+    return class extends Base{
+        balance: number = 0;
+        payFare(amount: number): void{
+            this.balance += amount;
+            console.log(`Оплачен проезд ${amount}. Текущий баланс: ${this.balance}`)
+        }
+    }
+}
+
+export const PayableTram = Payable(Tram);
